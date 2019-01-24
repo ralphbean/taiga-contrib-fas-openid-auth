@@ -1,7 +1,7 @@
 
 module = angular.module('taigaContrib.fasOpenIDAuth', [])
 
-FASOpenIDLoginButtonDirective = ($window, $params, $location, $config, $events, $confirm, $auth, $navUrls, $loader) ->
+FASOpenIDLoginButtonDirective = ($window, $params, $location, $config, $events, $confirm, $auth, $navUrls, $loader, $template) ->
     # Login or registar a user with his/her fas account.
     #
     # Example:
@@ -62,10 +62,9 @@ FASOpenIDLoginButtonDirective = ($window, $params, $location, $config, $events, 
         $scope.$on "$destroy", ->
             $el.off()
 
-    # Hide the original login form :D
-    # This is definitely not tha angular way of doing things, but ¯\_(ツ)_/¯
-    $('.login-form fieldset:nth-child(-n+3)').hide();
-    $('.login-text').hide();
+        # Hide the original login form :D
+        html = $template.get('/plugins/fas-openid-auth/fas_openid_auth.html')
+        $('.login-form').html(html)
 
     return {
         link: link
@@ -75,5 +74,5 @@ FASOpenIDLoginButtonDirective = ($window, $params, $location, $config, $events, 
 
 module.directive("tgFasOpenidLoginButton", [
     "$window", '$routeParams', "$tgLocation", "$tgConfig", "$tgEvents",
-   "$tgConfirm", "$tgAuth", "$tgNavUrls", "tgLoader",
+   "$tgConfirm", "$tgAuth", "$tgNavUrls", "tgLoader", "$tgTemplate",
    FASOpenIDLoginButtonDirective])
